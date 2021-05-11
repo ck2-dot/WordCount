@@ -5,43 +5,28 @@
 int main(int argc,char *argv[])
 {
 	FILE* stream;
-	if(--argc==2)
+	if(strcmp(argv[1],"-c")==0)
 	{
-		if(strcmp(argv[1],"-c")==0)
-		{
-			if(stream=fopen(argv[2],"r"))
-			{
-				printf("字符数：%d",totalcharacter(stream));
-			}
-			else
-			{
-				printf("Invalid filename input");
-			}
-		}
-		else if(strcmp(argv[1],"-w")==0)
-		{
-			if(stream=fopen(argv[2],"r"))
-			{
-				printf("单词数：%d",totalword(stream));
-			}
-			else
-			{
-				printf("Invalid filename input");
-			}
-		}
+		if(stream=fopen(argv[2],"r"))
+			printf("字符数：%d",totalcharacter(stream));
 		else
-		{
-			printf("Invalid parameter input\n");
-			printf("%d",strcmp(argv[1],"-c"));
-		}
+			printf("Invalid filename input");//无效的文件名输入
 	}
-	else
+
+	else if(strcmp(argv[1],"-w")==0)
 	{
-		printf("Wrong number of parameters");
+		if(stream=fopen(argv[2],"r"))
+			printf("单词数：%d",totalword(stream));
+		else
+			printf("Invalid filename input");
 	}
-	system("pause");
+
+	else
+		printf("Invalid parameter input\n"); //无效的参数输入
+	
 	return 0;
 }
+
 int totalcharacter(FILE* stream)
 {
 	//feof() 到达文件尾时返回真值
@@ -58,7 +43,7 @@ int totalcharacter(FILE* stream)
     else
         printf("fail to open! \n");
 	fclose(stream);
-	return Sum-1;//什么不写也有一个字符 
+	return Sum-1;//除去字符串的结束符 '\0' 
 }
 
 int totalword(FILE* stream)
@@ -77,5 +62,5 @@ int totalword(FILE* stream)
     else
         printf("fail to open! \n");
 	fclose(stream);
-	return Sum+1;//第一个单词没有什么东西隔着 
+	return Sum+1;//第一个单词前面不为空
 }
